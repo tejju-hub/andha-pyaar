@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love is Blind - The Romantic Game Show</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap');
+        
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --dark: #4a2c5a;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #ffeef8 100%);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80') no-repeat center center;
+            background-size: cover;
+            min-height: 70vh;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(74, 44, 90, 0.7), rgba(175, 57, 125, 0.5));
+        }
+        
+        .title-font {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .heart-beat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .profile-card {
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(175, 57, 125, 0.3);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 10% auto;
+                padding: 1.5rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem !important;
+            }
+            
+            .section-title {
+                font-size: 2rem !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white bg-opacity-90 shadow-md z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <span class="heart-beat text-rose-500 text-2xl mr-2">❤️</span>
+                <span class="title-font text-xl font-bold text-purple-800">Love is Blind</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="openModal('videos')" class="hidden md:block text-purple-700 hover:text-purple-900 font-medium">
+                    <i class="fas fa-play mr-1"></i> Episodes
+                </button>
+                <button onclick="openModal('organizers')" class="hidden md:block text-purple-700 hover:text-purple-900 font-medium">
+                    <i class="fas fa-users mr-1"></i> Organizers
+                </button>
+                <button onclick="openModal('login')" class="text-purple-700 hover:text-purple-900 font-medium">
+                    <i class="fas fa-user mr-1"></i> Login
+                </button>
+                <button onclick="openModal('admin')" class="text-gray-600 hover:text-purple-800">
+                    <i class="fas fa-lock"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero flex items-center justify-center relative text-white pt-20">
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h1 class="hero-title title-font text-4xl md:text-8xl mb-6 font-bold">
+                <span class="text-pink-300">Love</span>
+                <span class="heart-beat inline-block">❤️</span>
+                <span class="text-pink-200">is</span>
+                <span class="text-pink-100">Blind</span>
+            </h1>
+            <h2 class="text-xl md:text-3xl mb-8 font-light tracking-wider">
+                The Romantic Game Show That Will Change How You Find Love
+            </h2>
+            <div class="flex flex-col md:flex-row gap-6 justify-center">
+                <a href="#apply" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-4 px-10 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg">
+                    Apply Now <i class="ml-2 fas fa-heart"></i>
+                </a>
+                <button onclick="openModal('videos')" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white font-bold py-4 px-8 rounded-full text-lg transition-all transform hover:scale-105">
+                    Watch Episodes <i class="ml-2 fas fa-play"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-16">
+        <!-- Latest Episodes Section -->
+        <section class="mb-20">
+            <h2 class="section-title title-font text-3xl md:text-5xl text-center mb-12 text-purple-900">
+                Latest Episodes
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4">Season 1: The First Connections</h3>
+                    <p class="text-gray-600">Witness the magical first moments as contestants meet without seeing each other.</p>
+                </div>
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4">Blindfolded Cooking Challenge</h3>
+                    <p class="text-gray-600">Contestants prepare meals together while blindfolded - hilarious and heartwarming!</p>
+                </div>
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <h3 class="text-xl font-bold mt-4">The Grand Reveal</h3>
+                    <p class="text-gray-600">Emotional moment when contestants see each other for the first time.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Organizers Section -->
+        <section id="organizers" class="mb-20">
+            <h2 class="section-title title-font text-3xl md:text-5xl text-center mb-12 text-purple-900">
+                Meet Our Dream Team
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="profile-card">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" 
+                         alt="Rajiv Malhotra" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold">Rajiv Malhotra</h3>
+                        <p class="text-sm text-purple-600 font-semibold mb-2">Show Host</p>
+                        <p class="text-gray-700 text-sm">"I help people connect beyond physical appearances."</p>
+                        <div class="flex mt-4 space-x-3">
+                            <a href="#" class="text-blue-500"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-pink-500"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80" 
+                         alt="Priya Kapoor" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold">Priya Kapoor</h3>
+                        <p class="text-sm text-purple-600 font-semibold mb-2">Executive Producer</p>
+                        <p class="text-gray-700 text-sm">"We create spaces where true connections can blossom."</p>
+                        <div class="flex mt-4 space-x-3">
+                            <a href="#" class="text-blue-500"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-pink-500"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Dr. Amit Patel" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold">Dr. Amit Patel</h3>
+                        <p class="text-sm text-purple-600 font-semibold mb-2">Relationship Psychologist</p>
+                        <p class="text-gray-700 text-sm">"True love sees with the heart, not the eyes."</p>
+                        <div class="flex mt-4 space-x-3">
+                            <a href="#" class="text-blue-500"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-pink-500"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" 
+                         alt="Nisha Sharma" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold">Nisha Sharma</h3>
+                        <p class="text-sm text-purple-600 font-semibold mb-2">Creative Director</p>
+                        <p class="text-gray-700 text-sm">"We design experiences that bring out authentic emotions."</p>
+                        <div class="flex mt-4 space-x-3">
+                            <a href="#" class="text-blue-500"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-pink-500"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Form -->
+        <section id="apply" class="py-12 bg-white rounded-xl shadow-lg">
+            <div class="max-w-2xl mx-auto px-4">
+                <h2 class="title-font text-3xl md:text-4xl text-center mb-6 text-purple-900">Ready to Find Love?</h2>
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-purple-800 font-medium mb-2">Full Name</label>
+                            <input type="text" class="w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-600">
+                        </div>
+                        <div>
+                            <label class="block text-purple-800 font-medium mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-600">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-purple-800 font-medium mb-2">Why do you believe love is blind?</label>
+                        <textarea rows="4" class="w-full px-4 py-2 border border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-600"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition-all">
+                        Submit Application <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-purple-900 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-2xl"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-2xl"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-2xl"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="text-sm opacity-80">© 2024 Love is Blind Game Show. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Videos Modal -->
+    <div id="videosModal" class="modal">
+        <div class="modal-content">
+            <span onclick="closeModal('videos')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 cursor-pointer text-2xl">&times;</span>
+            <h2 class="title-font text-3xl mb-6 text-purple-900">Latest Episodes</h2>
+            <div class="space-y-8">
+                <div class="video-container mb-6">
+                    <iframe src="https://www.youtube.com/embed/d
